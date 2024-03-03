@@ -18,6 +18,14 @@ public class Celestial extends Node {
     Rotacion rotacion;
     Spatial body;
 
+    public Celestial(String name) {
+        super(name);
+        orbita = new Orbita(0,0,0);
+        rotacion = new Rotacion(0,0,0);
+    }
+    
+    
+
     public Orbita getOrbita() {
         return orbita;
     }
@@ -39,6 +47,9 @@ public class Celestial extends Node {
     }
 
     public void setBody(Spatial body) {
+         if (this.body != null) {
+            this.detachChild(this.body); 
+        }
         this.body = body;
         this.attachChildAt(body, 0);
     }

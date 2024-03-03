@@ -68,6 +68,7 @@ public class Main extends SimpleApplication {
 
         
         rootNode.attachChild(sol);
+        System.out.println(rootNode.getChildren().size());
     }
 
     @Override
