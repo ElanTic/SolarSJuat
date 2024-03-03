@@ -8,6 +8,6 @@ package mygame.Systems;
  *
  * @author jt
  */
-public class Orbita {
+public class SistemaOrbita {
     
 }
