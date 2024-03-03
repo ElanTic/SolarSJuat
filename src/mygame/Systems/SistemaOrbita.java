@@ -4,10 +4,24 @@
  */
 package mygame.Systems;
 
+import com.jme3.util.SafeArrayList;
+import mygame.Components.Orbita;
+import mygame.Entities.Celestial;
+
 /**
  *
  * @author jt
  */
 public class SistemaOrbita {
+        
+     SafeArrayList<Celestial> elementos;
     
+     void update(float deltaTime) {
+        for (Celestial elemento : elementos) {
+            Orbita orbita = elemento.getOrbita();
+            elemento.rotate(deltaTime* orbita.getxSpeed() , 
+                    deltaTime * orbita.getySpeed(), 
+                    deltaTime * orbita.getzSpeed());
+        }
+    }
 }
