@@ -53,7 +53,4 @@ public class Celestial extends Node {
         this.body = body;
         this.attachChildAt(body, 0);
     }
-    
-    
-    
 }

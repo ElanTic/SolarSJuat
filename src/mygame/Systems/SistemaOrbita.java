@@ -4,7 +4,7 @@
  */
 package mygame.Systems;
 
-import com.jme3.util.SafeArrayList;
+import com.jme3.scene.Spatial;
 import mygame.Components.Orbita;
 import mygame.Entities.Celestial;
 
@@ -13,15 +13,16 @@ import mygame.Entities.Celestial;
  * @author jt
  */
 public class SistemaOrbita {
-        
-     SafeArrayList<Celestial> elementos;
-    
-     void update(float deltaTime) {
-        for (Celestial elemento : elementos) {
-            Orbita orbita = elemento.getOrbita();
-            elemento.rotate(deltaTime* orbita.getxSpeed() , 
+     
+     public static void update(float deltaTime, Celestial rootNode) {
+        Orbita orbita = rootNode.getOrbita();
+            rootNode.rotate(deltaTime* orbita.getxSpeed() , 
                     deltaTime * orbita.getySpeed(), 
                     deltaTime * orbita.getzSpeed());
+        for (Spatial elemento : rootNode.getChildren()){
+            if(elemento instanceof Celestial){
+                update(deltaTime, (Celestial) elemento);
+            }
         }
     }
 }

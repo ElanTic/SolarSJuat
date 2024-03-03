@@ -4,6 +4,7 @@
  */
 package mygame.Systems;
 
+import com.jme3.scene.Spatial;
 import com.jme3.util.SafeArrayList;
 import mygame.Components.Rotacion;
 import mygame.Entities.Celestial;
@@ -14,14 +15,20 @@ import mygame.Entities.Celestial;
  */
 public class SistemaRotacion {
     
-     SafeArrayList<Celestial> elementos;
+     //SafeArrayList<Celestial> elementos;
     
-     void update(float deltaTime) {
-        for (Celestial elemento : elementos) {
-            Rotacion rotacion = elemento.getRotacion();
-            elemento.rotate(deltaTime* rotacion.getxSpeed() , 
-                    deltaTime * rotacion.getySpeed(), 
-                    deltaTime * rotacion.getzSpeed());
+     public static void update(float deltaTime, Celestial rootNode) {
+        Spatial body = rootNode.getBody();
+        if(body != null){
+            Rotacion rotacion = rootNode.getRotacion();
+                body.rotate(deltaTime* rotacion.getxSpeed() , 
+                        deltaTime * rotacion.getySpeed(), 
+                        deltaTime * rotacion.getzSpeed());
+        }
+        for (Spatial elemento : rootNode.getChildren()){
+            if(elemento instanceof Celestial){
+                update(deltaTime, (Celestial) elemento);
+            }
         }
     }
     
