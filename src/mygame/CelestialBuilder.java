@@ -4,6 +4,7 @@
  */
 package mygame;
 
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
 import mygame.Components.Orbita;
 import mygame.Components.Rotacion;
@@ -19,6 +20,8 @@ public class CelestialBuilder {
     private Rotacion rotacion;
     private Orbita orbita;
     private Celestial parent;
+    //private float x,y,z;
+    private Vector3f position;
 
     public CelestialBuilder(String name) {
         this.name = name;
@@ -43,6 +46,11 @@ public class CelestialBuilder {
         this.parent = parent;
         return this;
     }
+    
+    public CelestialBuilder poss(float x, float y, float z) {
+        this.position = new Vector3f(x, y, z);
+        return this;
+    }
 
     public Celestial build() {
         Celestial celestial = new Celestial(name);
@@ -57,6 +65,9 @@ public class CelestialBuilder {
         }
         if (parent != null) {
             parent.attachChild(celestial);
+        }
+        if (position != null) {
+            celestial.setLocalTranslation(position);
         }
         return celestial;
     }

@@ -35,34 +35,37 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         Celestial sol =    new CelestialBuilder("sol")
+                .body(createPlanetGeometry(ColorRGBA.Yellow,2,"Textures/pixelated_image.png"))
                 .orbita(new Orbita(0, 1, 0))
                 .build();
 
         Celestial tierra = new CelestialBuilder("tierra")
-                .body(createPlanetGeometry(ColorRGBA.Blue)) 
+                .body(createPlanetGeometry(ColorRGBA.Blue,1,"Textures/pixelated_image.png")) 
                 .rotacion(new Rotacion(0, 5, 0))
                 .orbita(new Orbita(0, 2, 0))
+                .poss(4, 0, 0)
                 .parent(sol) 
                 .build();
 
         Celestial luna = new CelestialBuilder("luna")
-                .body(createLunaGeometry(ColorRGBA.Red)) 
+                .body(createPlanetGeometry(ColorRGBA.White ,.2f,"Textures/pixelated_image.png")) 
                 .rotacion(new Rotacion(0, 2, 0))
                 .parent(tierra) 
+                .poss(5, 2, 2)
                 .build();
         
-        tierra.move(4, 0, 0);
-        luna.move(5, 2, 2);
+        //tierra.move(4, 0, 0);
+        //luna.move(5, 2, 2);
 
         rootNode.attachChild(sol);
     }
     
-    private Spatial createPlanetGeometry(ColorRGBA color) {
-        Sphere planetMesh = new Sphere(32, 32, 1); 
+    private Spatial createPlanetGeometry(ColorRGBA color, float size, String texture) {
+        Sphere planetMesh = new Sphere(32, 32, size); 
         Geometry planetGeometry = new Geometry("Planet", planetMesh);
         Material planetMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         planetMaterial.setColor("Color", color); 
-        planetMaterial.setTexture("ColorMap", assetManager.loadTexture("Textures/pixelated_image.png"));
+        planetMaterial.setTexture("ColorMap", assetManager.loadTexture(texture));
         planetGeometry.setMaterial(planetMaterial);
         return planetGeometry;
     }
