@@ -10,6 +10,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
 import com.jme3.system.AppSettings;
 import com.jme3.scene.Spatial;
+import com.jme3.scene.shape.Sphere;
 import mygame.Components.Orbita;
 import mygame.Components.Rotacion;
 import mygame.Entities.Celestial;
@@ -35,7 +36,14 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         Celestial sol = new Celestial("sol");
+        
         Celestial tierra = new Celestial ("tierra");
+        Sphere planetMesh = new Sphere(32, 32, 1); // Adjust segments and radius as needed
+        Geometry planetGeometry = new Geometry("Planet", planetMesh);
+        Material planetMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        planetMaterial.setColor("Color", ColorRGBA.Blue); // Adjust color as needed
+        planetGeometry.setMaterial(planetMaterial);
+        
         Celestial luna = new Celestial("luna");
         Box b = new Box(.2f, .2f, .2f);
         Geometry lunaGeom = new Geometry("lunaGeom", b);
@@ -63,16 +71,14 @@ public class Main extends SimpleApplication {
         tierra.move(4,0,0);
         luna.move(5,2,2);
         rootNode.attachChild(sol);
+        tierra.setBody(planetGeometry);
     }
 
     @Override
     public void simpleUpdate(float tpf) {
         //TODO: add update code
         SistemaOrbita.update(tpf, (Celestial) rootNode.getChild("sol"));
-        SistemaRotacion.update(tpf, (Celestial)rootNode.getChild("sol"));
-        
-        
-        
+        SistemaRotacion.update(tpf, (Celestial)rootNode.getChild("sol"));  
     }
 
     @Override
