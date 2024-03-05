@@ -42,58 +42,79 @@ public class Main extends SimpleApplication {
                 .build();
 
         Celestial tierra = new CelestialBuilder("tierra")
-                .body(createPlanetGeometry(ColorRGBA.Blue,.1f,"Textures/pixelated_image.png")) 
-                .rotacion(new Rotacion(0, 5, 0))
-                .orbita(new Orbita(0, 2, 0))
-                .poss(6, 0, 0)
-                .parent(sol) 
+            .body(createPlanetGeometry(ColorRGBA.Cyan, 0.25f, "Textures/pixelated_image.png")) // Double the radius
+            .rotacion(new Rotacion(0, 5, 0))
+            .orbita(new Orbita(0, 2.5f, 0))
+            .poss(6, 0, 0)
+            .parent(sol)
+            .build();
+
+        
+        Celestial luna = new CelestialBuilder("luna")
+                .body(createPlanetGeometry(ColorRGBA.White, 0.07f, "Textures/pixelated_image.png")) // Double the radius
+                .rotacion(new Rotacion(0, 2, 0))
+                .parent(tierra)
+                .poss(1.0f, 0.4f, 0.4f)
                 .build();
 
-        Celestial luna = new CelestialBuilder("luna")
-                .body(createPlanetGeometry(ColorRGBA.White ,.02f,"Textures/pixelated_image.png")) 
-                .rotacion(new Rotacion(0, 2, 0))
-                .parent(tierra) 
-                .poss(.5f, .2f, .2f)
-                .build();
-        
         Celestial venus = new CelestialBuilder("venus")
-                .body(createPlanetGeometry(ColorRGBA.Cyan,.04f,"Textures/pixelated_image.png")) 
+                .body(createPlanetGeometry(ColorRGBA.Cyan, 0.08f, "Textures/pixelated_image.png")) // Double the radius
                 .rotacion(new Rotacion(2, 2, 0))
-                //.orbita(new Orbita(2, 3, 2))
+                .orbita(new Orbita(0, 4, 9))
                 .poss(-4, 2, 2)
-                .parent(sol) 
+                .parent(sol)
+                .build();
+
+        Celestial lunaVenus = new CelestialBuilder("luna_venus")
+                .body(createPlanetGeometry(ColorRGBA.Gray, 0.03f, "Textures/pixelated_image.png")) // Double the radius
+                .rotacion(new Rotacion(0, 2, 0))
+                .parent(venus)
+                .poss(.7f, 1f, 0)
                 .build();
         
+        Celestial lunaVenus2 = new CelestialBuilder("luna_venus2")
+                .body(createPlanetGeometry(ColorRGBA.Gray, 0.04f, "Textures/pixelated_image.png")) // Double the radius
+                .rotacion(new Rotacion(0, 1, 0))
+                .parent(venus)
+                .poss(.4f, 1, 0)
+                .build();
+
+
         Celestial mercurio = new CelestialBuilder("mercurio")
-                .body(createPlanetGeometry(ColorRGBA.Green,.03f,"Textures/pixelated_image.png")) 
+                .body(createPlanetGeometry(ColorRGBA.Green, 0.06f, "Textures/pixelated_image.png")) // Double the radius
                 .rotacion(new Rotacion(2, 0, 1))
-                //.orbita(new Orbita(2, 3, 2))
+                .orbita(new Orbita(0, 0, 8))
                 .poss(3, -1, 3)
-                .parent(sol) 
+                .parent(sol)
                 .build();
-        
+
+        Celestial lunaMercurio = new CelestialBuilder("luna_mercurio")
+                .body(createPlanetGeometry(ColorRGBA.Gray, 0.02f, "Textures/pixelated_image.png")) // Double the radius
+                .rotacion(new Rotacion(0, 1, 0))
+                .parent(mercurio)
+                .poss(0.4f, 0.4f, 0.4f)
+                .build();
+
         Celestial marte = new CelestialBuilder("marte")
-                .body(createMarteGeometry(ColorRGBA.Red)) 
+                .body(createMarteGeometry(ColorRGBA.Red))
                 .rotacion(new Rotacion(2, 0, 1))
-                //.orbita(new Orbita(2, 3, 2))
                 .poss(7, -1, 7)
-                .parent(sol) 
+                .parent(sol)
                 .build();
-        
+
         Celestial jupiter = new CelestialBuilder("jupiter")
-                .body(createPlanetGeometry(ColorRGBA.Green,.4f,"Textures/pixelated_image.png")) 
+                .body(createPlanetGeometry(ColorRGBA.Green, 0.8f, "Textures/pixelated_image.png")) // Double the radius
                 .rotacion(new Rotacion(1, 1, 0))
                 .orbita(new Orbita(2, 3, 2))
-                .poss(10, 1, -8)
-                .parent(sol) 
+                .poss(10, 2, -10)
+                .parent(sol)
                 .build();
-        
+
         Celestial lunaJ = new CelestialBuilder("lunaj")
-                .body(createPlanetGeometry(ColorRGBA.Magenta,.2f,"Textures/pixelated_image.png")) 
+                .body(createPlanetGeometry(ColorRGBA.Magenta, 0.4f, "Textures/pixelated_image.png")) // Double the radius
                 .rotacion(new Rotacion(0, 5, 0))
-                //.orbita(new Orbita(0, 2, 0))
-                .poss(1, 0, 0)
-                .parent(jupiter) 
+                .poss(2, 0, 0)
+                .parent(jupiter)
                 .build();
         
         rootNode.attachChild(sol);
@@ -105,6 +126,7 @@ public class Main extends SimpleApplication {
                 .poss(-13, 1, -5)
                 .parent(sol) 
                 .build();      
+        
         
     }
     
@@ -120,7 +142,7 @@ public class Main extends SimpleApplication {
 
     private Spatial createMarteGeometry(ColorRGBA color) {
         
-        Box b = new Box(.08f, .08f, .08f);
+        Box b = new Box(.14f, .14f, .14f);
         Geometry lunaGeom = new Geometry("lunaGeom", b);
 
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
