@@ -9,7 +9,9 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 import com.jme3.system.AppSettings;
 import com.jme3.scene.Spatial;
+import com.jme3.scene.shape.Dome;
 import com.jme3.scene.shape.Sphere;
+import com.jme3.util.SkyFactory;
 import mygame.Components.Orbita;
 import mygame.Components.Rotacion;
 import mygame.Entities.Celestial;
@@ -26,7 +28,7 @@ public class Main extends SimpleApplication {
     public static void main(String[] args) {
         Main app = new Main();
         AppSettings settings = new AppSettings(true);
-        settings.setTitle("Chinchilla\'s rampart");
+        settings.setTitle("Sistema solar");
         app.setSettings(settings);
         settings.setFrameRate(60);
         app.start();
@@ -35,29 +37,75 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         Celestial sol =    new CelestialBuilder("sol")
-                .body(createPlanetGeometry(ColorRGBA.Yellow,2,"Textures/pixelated_image.png"))
+                .body(createPlanetGeometry(ColorRGBA.Yellow,1,"Textures/plasma.png"))
                 .orbita(new Orbita(0, 1, 0))
                 .build();
 
         Celestial tierra = new CelestialBuilder("tierra")
-                .body(createPlanetGeometry(ColorRGBA.Blue,1,"Textures/pixelated_image.png")) 
+                .body(createPlanetGeometry(ColorRGBA.Blue,.1f,"Textures/pixelated_image.png")) 
                 .rotacion(new Rotacion(0, 5, 0))
                 .orbita(new Orbita(0, 2, 0))
-                .poss(4, 0, 0)
+                .poss(6, 0, 0)
                 .parent(sol) 
                 .build();
 
         Celestial luna = new CelestialBuilder("luna")
-                .body(createPlanetGeometry(ColorRGBA.White ,.2f,"Textures/pixelated_image.png")) 
+                .body(createPlanetGeometry(ColorRGBA.White ,.02f,"Textures/pixelated_image.png")) 
                 .rotacion(new Rotacion(0, 2, 0))
                 .parent(tierra) 
-                .poss(5, 2, 2)
+                .poss(.5f, .2f, .2f)
                 .build();
         
-        //tierra.move(4, 0, 0);
-        //luna.move(5, 2, 2);
-
+        Celestial venus = new CelestialBuilder("venus")
+                .body(createPlanetGeometry(ColorRGBA.Cyan,.04f,"Textures/pixelated_image.png")) 
+                .rotacion(new Rotacion(2, 2, 0))
+                //.orbita(new Orbita(2, 3, 2))
+                .poss(-4, 2, 2)
+                .parent(sol) 
+                .build();
+        
+        Celestial mercurio = new CelestialBuilder("mercurio")
+                .body(createPlanetGeometry(ColorRGBA.Green,.03f,"Textures/pixelated_image.png")) 
+                .rotacion(new Rotacion(2, 0, 1))
+                //.orbita(new Orbita(2, 3, 2))
+                .poss(3, -1, 3)
+                .parent(sol) 
+                .build();
+        
+        Celestial marte = new CelestialBuilder("marte")
+                .body(createMarteGeometry(ColorRGBA.Red)) 
+                .rotacion(new Rotacion(2, 0, 1))
+                //.orbita(new Orbita(2, 3, 2))
+                .poss(7, -1, 7)
+                .parent(sol) 
+                .build();
+        
+        Celestial jupiter = new CelestialBuilder("jupiter")
+                .body(createPlanetGeometry(ColorRGBA.Green,.4f,"Textures/pixelated_image.png")) 
+                .rotacion(new Rotacion(1, 1, 0))
+                .orbita(new Orbita(2, 3, 2))
+                .poss(10, 1, -8)
+                .parent(sol) 
+                .build();
+        
+        Celestial lunaJ = new CelestialBuilder("lunaj")
+                .body(createPlanetGeometry(ColorRGBA.Magenta,.2f,"Textures/pixelated_image.png")) 
+                .rotacion(new Rotacion(0, 5, 0))
+                //.orbita(new Orbita(0, 2, 0))
+                .poss(1, 0, 0)
+                .parent(jupiter) 
+                .build();
+        
         rootNode.attachChild(sol);
+        
+        Celestial amlo = new CelestialBuilder("amlo")
+                .body(createPlanetGeometry(ColorRGBA.Yellow,1.5f,"Textures/amlo.JPG"))
+                .rotacion(new Rotacion(0, 1.5f, .7f))
+                //.orbita(new Orbita(2, 3, 2))
+                .poss(-13, 1, -5)
+                .parent(sol) 
+                .build();      
+        
     }
     
     private Spatial createPlanetGeometry(ColorRGBA color, float size, String texture) {
@@ -70,8 +118,9 @@ public class Main extends SimpleApplication {
         return planetGeometry;
     }
 
-    private Spatial createLunaGeometry(ColorRGBA color) {
-        Box b = new Box(.2f, .2f, .2f);
+    private Spatial createMarteGeometry(ColorRGBA color) {
+        
+        Box b = new Box(.08f, .08f, .08f);
         Geometry lunaGeom = new Geometry("lunaGeom", b);
 
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
@@ -86,7 +135,8 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleUpdate(float tpf) {
         SistemaOrbita.update(tpf, (Celestial) rootNode.getChild("sol"));
-        SistemaRotacion.update(tpf, (Celestial)rootNode.getChild("sol"));  
+        SistemaRotacion.update(tpf, (Celestial)rootNode.getChild("sol")); 
+        //rootNode.rotate(0,0.001f,0);
     }
 
     @Override
